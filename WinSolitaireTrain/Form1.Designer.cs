@@ -43,7 +43,7 @@
             // btnNext
             // 
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Location = new System.Drawing.Point(589, 457);
+            this.btnNext.Location = new System.Drawing.Point(928, 570);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(199, 29);
             this.btnNext.TabIndex = 0;
@@ -109,7 +109,7 @@
             "Klør Knægt",
             "Klør Dame",
             "Klør Konge"});
-            this.lbType.Location = new System.Drawing.Point(589, 31);
+            this.lbType.Location = new System.Drawing.Point(928, 144);
             this.lbType.Name = "lbType";
             this.lbType.Size = new System.Drawing.Size(201, 324);
             this.lbType.TabIndex = 1;
@@ -121,7 +121,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbCard.Location = new System.Drawing.Point(12, 31);
             this.pbCard.Name = "pbCard";
-            this.pbCard.Size = new System.Drawing.Size(571, 455);
+            this.pbCard.Size = new System.Drawing.Size(910, 568);
             this.pbCard.TabIndex = 2;
             this.pbCard.TabStop = false;
             // 
@@ -132,7 +132,7 @@
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1139, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -146,7 +146,7 @@
             // btnBeginTraining
             // 
             this.btnBeginTraining.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBeginTraining.Location = new System.Drawing.Point(589, 399);
+            this.btnBeginTraining.Location = new System.Drawing.Point(928, 512);
             this.btnBeginTraining.Name = "btnBeginTraining";
             this.btnBeginTraining.Size = new System.Drawing.Size(199, 23);
             this.btnBeginTraining.TabIndex = 4;
@@ -157,7 +157,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(589, 428);
+            this.btnSave.Location = new System.Drawing.Point(928, 541);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(199, 23);
             this.btnSave.TabIndex = 5;
@@ -169,7 +169,7 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(589, 367);
+            this.lblStatus.Location = new System.Drawing.Point(928, 480);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(98, 17);
             this.lblStatus.TabIndex = 6;
@@ -179,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 498);
+            this.ClientSize = new System.Drawing.Size(1139, 611);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnBeginTraining);
