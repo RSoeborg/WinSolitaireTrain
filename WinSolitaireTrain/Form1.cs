@@ -16,7 +16,7 @@ namespace WinSolitaireTrain
     public partial class WinTrain : Form
     {
         [DllImport("user32.dll")]
-        public static extern int GetAsyncKeyState(int vKey);
+        public static extern short GetAsyncKeyState(int vKey);
 
         #region Fields
         ImageCollectionHandler ImageCollection;
@@ -24,7 +24,7 @@ namespace WinSolitaireTrain
         bool placing = false;
         bool sizing = false;
         Point savedLocation;
-        Thread enterThread;
+        Thread keyThread;
         AITrainer ai;
         #endregion
 
@@ -32,9 +32,8 @@ namespace WinSolitaireTrain
         {
             InitializeComponent();
             ImageCollection = new ImageCollectionHandler();
-            drawer = new PictureDraw(pbCard);
-
             ai = new AITrainer(lbType.Items.Cast<string>().ToArray());
+            drawer = new PictureDraw(pbCard, this.Font, ai.names);
 
             pbCard.Click += (s, e) => 
             { 
@@ -82,28 +81,72 @@ namespace WinSolitaireTrain
                 }
             };
 
-            enterThread = new Thread(() =>
+            keyThread = new Thread(() =>
             {
                 while (true)
                 {
-                    if (GetAsyncKeyState(0x0D) == -32767)
+                    if (GetAsyncKeyState(0x7B) == -32767)
                     {
-                        btnSave_Click(null, EventArgs.Empty);
+                        this.Invoke(new Action(() => {
+                            lock (drawer.mutex)
+                            {
+                                if (lbType.SelectedIndex >= 0)
+                                {
+                                    drawer.Cards.Add(new Card()
+                                    {
+                                        Bounds = drawer.rectangle,
+                                        Type = lbType.SelectedIndex
+                                    });
+                                    drawer.rectangle = new Rectangle(0, 0, 1, 1);
+                                    placing = true;
+                                    sizing = false;
+                                }
+                            }
+                        }));
                     }
+
+                    if (GetAsyncKeyState(0xA6) == -32767)
+                    {
+                        this.Invoke(new Action(() => {
+                            lock (drawer.mutex)
+                            {
+                                if (drawer.Cards.Count > 0)
+                                    drawer.Cards.Remove(drawer.Cards.Last());
+                            }
+                        }));
+                    }
+
                     Thread.Sleep(1);
                 }
             });
-            enterThread.Start(); 
+            keyThread.Start(); 
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            enterThread.Abort();
+            keyThread.Abort();
         }
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var msgBoxResult = MessageBox.Show("Open Default?", "Open", MessageBoxButtons.YesNo);
+
+            if (msgBoxResult == DialogResult.Yes)
+            {
+                string[] files = Directory.GetFiles(@"C:\Users\hansk\source\repos\SolitaireSolver\SolitaireSolver\bin\Debug\imgs");
+
+                foreach (var file in files)
+                {
+                    Image image = System.Drawing.Image.FromFile(file);
+                    ImageCollection.Add(image);
+                }
+
+                OpenImage();
+
+                return;
+            }
+
             using (var fbd = new FolderBrowserDialog())
             {
                 var result = fbd.ShowDialog();
@@ -142,11 +185,12 @@ namespace WinSolitaireTrain
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (lbType.SelectedIndex > 0)
+            if (lbType.SelectedIndex >= 0)
             {
                 var img = (Bitmap)ImageCollection.Get();
                 placing = true;
-                ai.Save(img, drawer.rectangle, lbType.SelectedIndex);
+                ai.Save(img, drawer.Cards.ToArray());
+                drawer.Cards.Clear();
                 UpdateStatus("Gemt");
             } else
             {

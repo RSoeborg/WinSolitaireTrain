@@ -43,9 +43,10 @@
             // btnNext
             // 
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Location = new System.Drawing.Point(928, 570);
+            this.btnNext.Location = new System.Drawing.Point(696, 463);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(199, 29);
+            this.btnNext.Size = new System.Drawing.Size(149, 24);
             this.btnNext.TabIndex = 0;
             this.btnNext.Text = "Næste";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -53,9 +54,9 @@
             // 
             // lbType
             // 
-            this.lbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbType.FormattingEnabled = true;
-            this.lbType.ItemHeight = 16;
             this.lbType.Items.AddRange(new object[] {
             "Spar Es",
             "Spar 2",
@@ -109,9 +110,10 @@
             "Klør Knægt",
             "Klør Dame",
             "Klør Konge"});
-            this.lbType.Location = new System.Drawing.Point(928, 144);
+            this.lbType.Location = new System.Drawing.Point(696, 26);
+            this.lbType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lbType.Name = "lbType";
-            this.lbType.Size = new System.Drawing.Size(201, 324);
+            this.lbType.Size = new System.Drawing.Size(152, 355);
             this.lbType.TabIndex = 1;
             // 
             // pbCard
@@ -119,9 +121,10 @@
             this.pbCard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbCard.Location = new System.Drawing.Point(12, 31);
+            this.pbCard.Location = new System.Drawing.Point(9, 25);
+            this.pbCard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pbCard.Name = "pbCard";
-            this.pbCard.Size = new System.Drawing.Size(910, 568);
+            this.pbCard.Size = new System.Drawing.Size(682, 462);
             this.pbCard.TabIndex = 2;
             this.pbCard.TabStop = false;
             // 
@@ -132,23 +135,25 @@
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1139, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(854, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(105, 24);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.testToolStripMenuItem.Text = "Åbn Billeder";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // btnBeginTraining
             // 
             this.btnBeginTraining.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBeginTraining.Location = new System.Drawing.Point(928, 512);
+            this.btnBeginTraining.Location = new System.Drawing.Point(696, 416);
+            this.btnBeginTraining.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBeginTraining.Name = "btnBeginTraining";
-            this.btnBeginTraining.Size = new System.Drawing.Size(199, 23);
+            this.btnBeginTraining.Size = new System.Drawing.Size(149, 19);
             this.btnBeginTraining.TabIndex = 4;
             this.btnBeginTraining.Text = "Begynd Træning";
             this.btnBeginTraining.UseVisualStyleBackColor = true;
@@ -157,9 +162,10 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(928, 541);
+            this.btnSave.Location = new System.Drawing.Point(696, 440);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(199, 23);
+            this.btnSave.Size = new System.Drawing.Size(149, 19);
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Gem";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -169,17 +175,18 @@
             // 
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(928, 480);
+            this.lblStatus.Location = new System.Drawing.Point(696, 390);
+            this.lblStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(98, 17);
+            this.lblStatus.Size = new System.Drawing.Size(74, 13);
             this.lblStatus.TabIndex = 6;
             this.lblStatus.Text = "Status: Venter";
             // 
             // WinTrain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1139, 611);
+            this.ClientSize = new System.Drawing.Size(854, 496);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnBeginTraining);
@@ -188,6 +195,7 @@
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "WinTrain";
             this.Text = "Solitaire Trainer";
             ((System.ComponentModel.ISupportInitialize)(this.pbCard)).EndInit();

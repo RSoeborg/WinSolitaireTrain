@@ -13,12 +13,16 @@ namespace WinSolitaireTrain
 {
     public class AITrainer
     {
-        readonly string[] names;
+        public readonly string[] names;
         readonly string fileDir = "solitaire_images";
 
         public AITrainer(string[] names)
         {
-            this.names = names;
+            this.names = names.Select(name => name
+                    .Replace("å", "aa")
+                    .Replace("æ", "ae")
+                    .Replace("ø", "oe")
+                    .Replace(" ", "_")).ToArray();
 
             if (!File.Exists($"trainfiles/{fileDir}.cfg") || !File.Exists($"trainfiles/{fileDir}.weights") || !File.Exists($"trainfiles/{fileDir}.names"))
             {
@@ -52,16 +56,22 @@ namespace WinSolitaireTrain
 
         }
 
-        public void Save(Bitmap bitmap, Rectangle rectangle, int index)
-        { 
-            float relative_center_x = (rectangle.X + rectangle.Width / 2);
-            float relative_center_y = (rectangle.Y + rectangle.Height / 2);
-            float relative_width = rectangle.Width;
-            float relative_height = rectangle.Height;
+        public void Save(Bitmap bitmap, Card[] cards)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var card in cards)
+            {
+                float relative_center_x = ((float)card.Bounds.X + card.Bounds.Width / 2) / bitmap.Width;
+                float relative_center_y = ((float)card.Bounds.Y + card.Bounds.Height / 2) / bitmap.Height;
+                float relative_width = (float)card.Bounds.Width / bitmap.Width;
+                float relative_height = (float)card.Bounds.Height / bitmap.Height;
+
+                builder.AppendLine($"{card.Type} {relative_center_x} {relative_center_y} {relative_width} {relative_height}".Replace(",", "."));
+            }
 
             int rand = new Random().Next(5000, 999999);
-            bitmap.Save($"darknet/data/img/solitaire{rand}.png", System.Drawing.Imaging.ImageFormat.Png);
-            File.WriteAllText($"darknet/data/img/solitaire{rand}.txt", $"{index} {relative_center_x} {relative_center_y} {relative_width} {relative_height}".Replace(",", "."));
+            bitmap.Save($"darknet/data/img/{fileDir}{rand}.png", System.Drawing.Imaging.ImageFormat.Png);
+            File.WriteAllText($"darknet/data/img/{fileDir}{rand}.txt", builder.ToString());
             
             Console.Beep();
         }
