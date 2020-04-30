@@ -39,7 +39,7 @@ namespace WinSolitaireTrain
             { 
                 if (placing) { 
                     placing = false; 
-                    sizing = true; 
+                    sizing = true; // add line here for no sizing
                     savedLocation = Cursor.Position; 
                     UpdateStatus("Vælg størrelse"); 
                 }
@@ -56,7 +56,7 @@ namespace WinSolitaireTrain
                 if (placing)
                 {
                     drawer.rectangle = new Rectangle(
-                        e.Location,
+                        e.Location, //new Point(e.Location.X - drawer.rectangle.Width / 2, e.Location.Y - drawer.rectangle.Height / 2),
                         new Size(drawer.rectangle.Width, drawer.rectangle.Height)
                     );
                 }
@@ -97,7 +97,9 @@ namespace WinSolitaireTrain
                                         Bounds = drawer.rectangle,
                                         Type = lbType.SelectedIndex
                                     });
-                                    drawer.rectangle = new Rectangle(0, 0, 1, 1);
+
+                                    //drawer.rectangle = new Rectangle(0, 0, 1, 1);
+                                    OpenImage();
                                     placing = true;
                                     sizing = false;
                                 }
@@ -105,7 +107,19 @@ namespace WinSolitaireTrain
                         }));
                     }
 
-                    if (GetAsyncKeyState(0xA6) == -32767)
+                    if (GetAsyncKeyState(0x7A) == -32767)
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            lock (drawer.mutex)
+                            {
+                                btnSave_Click(null, EventArgs.Empty);
+                                btnNext_Click(null, EventArgs.Empty);
+                            }
+                        }));
+                    }
+
+                    if (GetAsyncKeyState(0x52) == -32767) //R key
                     {
                         this.Invoke(new Action(() => {
                             lock (drawer.mutex)
@@ -128,18 +142,39 @@ namespace WinSolitaireTrain
             keyThread.Abort();
         }
 
+        List<string> loadedImages = new List<string>();
+
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var msgBoxResult = MessageBox.Show("Open Default?", "Open", MessageBoxButtons.YesNo);
 
+            if (File.Exists("loaded.txt"))
+            {
+                var contents = File.ReadAllText("loaded.txt").Replace("\r\n", "\n").Split('\n');
+                foreach (var content in contents) { loadedImages.Add(content); }
+            }
+
             if (msgBoxResult == DialogResult.Yes)
             {
-                string[] files = Directory.GetFiles(@"C:\Users\hansk\source\repos\SolitaireSolver\SolitaireSolver\bin\Debug\imgs");
+                string[] files_found = Directory.GetFiles(@"C:\Users\hansk\source\repos\SolitaireSolver\SolitaireSolver\bin\Debug\imgs");
+                var files = new FileInfo[files_found.Length];
+                for (int i = 0; i < files.Length; i++)
+                {
+                    files[i] = new FileInfo(files_found[i]);
+                }
+
+                var newList = files.ToList();
+                newList.Sort((o1, o2) => o1.CreationTimeUtc.CompareTo(o2.CreationTimeUtc));
+                files = newList.ToArray();
+
 
                 foreach (var file in files)
                 {
-                    Image image = System.Drawing.Image.FromFile(file);
-                    ImageCollection.Add(image);
+                    if (!loadedImages.Contains(file.FullName))
+                    {
+                        Image image = Image.FromFile(file.FullName);
+                        ImageCollection.Add(image, file.FullName);
+                    }
                 }
 
                 OpenImage();
@@ -156,8 +191,11 @@ namespace WinSolitaireTrain
 
                     foreach (var file in files)
                     {
-                        Image image = System.Drawing.Image.FromFile(file);
-                        ImageCollection.Add(image);
+                        if (!loadedImages.Contains(file))
+                        {
+                            Image image = System.Drawing.Image.FromFile(file);
+                            ImageCollection.Add(image, file);
+                        }
                     }
                 }
             }
@@ -185,17 +223,20 @@ namespace WinSolitaireTrain
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (lbType.SelectedIndex >= 0)
+            var img = (Bitmap)ImageCollection.Get();
+            placing = true;
+            ai.Save(img, drawer.Cards.ToArray());
+
+            loadedImages.Add(ImageCollection.GetFileName());
+            StringBuilder loadedImagesBuilder = new StringBuilder();
+            foreach (var loadedImage in loadedImages)
             {
-                var img = (Bitmap)ImageCollection.Get();
-                placing = true;
-                ai.Save(img, drawer.Cards.ToArray());
-                drawer.Cards.Clear();
-                UpdateStatus("Gemt");
-            } else
-            {
-                MessageBox.Show("Vælg korttype!");
+                loadedImagesBuilder.AppendLine(loadedImage);
             }
+            File.WriteAllText("loaded.txt", loadedImagesBuilder.ToString());
+
+            drawer.Cards.Clear();
+            UpdateStatus("Gemt");
         }
 
         private void UpdateStatus(string Status)

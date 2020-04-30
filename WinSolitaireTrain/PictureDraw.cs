@@ -37,7 +37,7 @@ namespace WinSolitaireTrain
             greenBrush = new SolidBrush(Color.Green);
             greenPen = new Pen(greenBrush, 2);
 
-            Size stdSize = new Size(150, 150);
+            Size stdSize = new Size(135, 190);
             rectangle = new Rectangle(new Point(0, 0), stdSize);
 
             box.Resize += (s, e) => {
